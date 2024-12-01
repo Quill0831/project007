@@ -1,0 +1,42 @@
+* {
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#start {
+  background-color: yellow;
+  margin: 15px;
+  padding: 15px;
+  cursor: pointer;
+}
+
+#myCanvas {
+  border: 5px solid rgb(238, 149, 144);
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#myScore {
+  margin-top: 1rem;
+}
+
+#myScore,
+#myScore2 {
+  font-size: 1rem;
+  color: white;
+  padding: 10px;
+}
+
+#start {
+  padding: 0.25rem 0.5rem;
+}
