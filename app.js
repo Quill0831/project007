@@ -4,6 +4,8 @@ const unit = 20;
 const row = canvas.height / unit;
 const column = canvas.weight / unit;
 
+//蛇的身體
+
 let snake = [];
 
 snake[0] = {
@@ -23,14 +25,48 @@ snake[3] = {
   y: 0,
 };
 
-for (let i = 0; i < snake.length; i++) {
-  if (i == 0) {
-    ctx.fillStyle = "lightgreen";
-  } else {
-    ctx.fillStyle = "lightblue";
+let d = "Right";
+function draw() {
+  //方格內全部塗黑
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.weight, canvas.height);
+
+  //fillstyle先決定使用顏色 fillrect決定使用範圍
+  //螢幕內畫出蛇
+  for (let i = 0; i < snake.length; i++) {
+    if (i == 0) {
+      ctx.fillStyle = "lightgreen"; //蛇頭顏色
+    } else {
+      ctx.fillStyle = "lightblue"; //蛇身體顏色
+    }
+
+    ctx.strokeStyle = "white"; //外框白色
+    ctx.fillRect(snake[i].x, snake[i].y, unit, unit);
+    ctx.strokeRect(snake[i].x, snake[i].y, unit, unit);
   }
 
-  ctx.strokeStyle = "white"; //外框白色
-  ctx.fillRect(snake[i].x, snake[i].y, unit, unit);
-  ctx.strokeRect(snake[i].x, snake[i].y, unit, unit);
+  //以d的方向決定蛇的下依禎數要放在哪裡
+  let snakeX = snake[0].x; //蛇的初始位置 抓開頭array的xy座標
+  let snakeY = snake[0].y;
+
+  //上下左右案件的對應動作
+  if (d == "Left") {
+    snakeX -= unit;
+  } else if (d == "Right") {
+    snakeX += unit;
+  } else if (d == "Up") {
+    snakeY += unit;
+  } else if (d == "Down") {
+    snakeY -= unit;
+  }
+
+  let newhead = {
+    x: snakeX,
+    y: snakeY,
+  };
+
+  snake.pop();
+  snake.unshift(newhead);
 }
+
+setInterval(draw, 100);
