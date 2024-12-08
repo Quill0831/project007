@@ -25,13 +25,27 @@ snake[3] = {
   y: 0,
 };
 
+window.addEventListener("keydown", changeDirection); //鍵盤按下去 執行changeDirection
 let d = "Right";
+function changeDirection(e) {
+  console.log(d);
+  if (e.key == "ArrowRight" && d !== "left") {
+    d = "Right";
+  } else if (e.key == "ArrowLeft" && d !== "Right") {
+    d = "Left";
+  } else if (e.key == "ArrowUp" && d !== "Down") {
+    d = "Up";
+    console.log("move up");
+  } else if (e.key == "ArrowDown" && d !== "Up") {
+    d = "Down";
+  }
+}
+
 function draw() {
   //方格內全部塗黑
   ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, canvas.weight, canvas.height);
+  ctx.fillRect(0, 0, canvas.width, canvas.height); //fillstyle先決定使用顏色 fillrect決定使用範圍
 
-  //fillstyle先決定使用顏色 fillrect決定使用範圍
   //螢幕內畫出蛇
   for (let i = 0; i < snake.length; i++) {
     if (i == 0) {
@@ -49,17 +63,17 @@ function draw() {
   let snakeX = snake[0].x; //蛇的初始位置 抓開頭array的xy座標
   let snakeY = snake[0].y;
 
-  //上下左右案件的對應動作
+  //上下左右按鈕的對應動作
   if (d == "Left") {
     snakeX -= unit;
   } else if (d == "Right") {
     snakeX += unit;
   } else if (d == "Up") {
-    snakeY += unit;
-  } else if (d == "Down") {
     snakeY -= unit;
+  } else if (d == "Down") {
+    snakeY += unit;
   }
-
+  // 增加新的蛇身體
   let newhead = {
     x: snakeX,
     y: snakeY,
@@ -70,3 +84,7 @@ function draw() {
 }
 
 setInterval(draw, 100);
+
+//設計一個蛋 1.隨機出現在canvas中 2.蛇吃掉會變長一個單位 3.
+
+const egg = [];
