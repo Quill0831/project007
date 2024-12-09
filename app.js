@@ -28,7 +28,6 @@ snake[3] = {
 window.addEventListener("keydown", changeDirection); //鍵盤按下去 執行changeDirection
 let d = "Right";
 function changeDirection(e) {
-  console.log(d);
   if (e.key == "ArrowRight" && d !== "left") {
     d = "Right";
   } else if (e.key == "ArrowLeft" && d !== "Right") {
@@ -53,7 +52,18 @@ function draw() {
     } else {
       ctx.fillStyle = "lightblue"; //蛇身體顏色
     }
-
+    if (snake[i].x > canvas.width) {
+      snake[i].x = 0;
+    }
+    if (snake[i].x < 0) {
+      snake[i].x = canvas.width - unit;
+    }
+    if (snake[i].y > canvas.height) {
+      snake[i].y = 0;
+    }
+    if (snake[i].y < 0) {
+      snake[i].y = canvas.height - unit;
+    }
     ctx.strokeStyle = "white"; //外框白色
     ctx.fillRect(snake[i].x, snake[i].y, unit, unit);
     ctx.strokeRect(snake[i].x, snake[i].y, unit, unit);
@@ -85,6 +95,4 @@ function draw() {
 
 setInterval(draw, 100);
 
-//設計一個蛋 1.隨機出現在canvas中 2.蛇吃掉會變長一個單位 3.
-
-const egg = [];
+//穿牆功能
