@@ -24,8 +24,26 @@ snake[3] = {
   x: 20,
   y: 0,
 };
+//蛋的本體
+
+let egg = [];
+//蛋的位置 1.隨機出現 2. 範圍限制在框框內 3. 不可以跟目前蛇的位置重疊
+//如果蛋被吃掉(蛇的頭位置跟蛋重疊) 蛋重新出現一次
+let randomLocation1 = Math.floor(Math.random() * 17); //0~16
+let randomLocation2 = Math.floor(Math.random() * 17); //0~16
+let randomLocationUnitX = randomLocation1 * 20;
+let randomLocationUnitY = randomLocation2 * 20;
+for (let i = 0; i < snake.length; i++) {
+  if (randomLocationUnitX == snake[i].x) {
+  }
+}
+egg[0] = {
+  x: randomLocationUnitX,
+  y: randomLocationUnitY,
+};
 
 window.addEventListener("keydown", changeDirection); //鍵盤按下去 執行changeDirection
+//控制方向
 let d = "Right";
 function changeDirection(e) {
   if (e.key == "ArrowRight" && d !== "left") {
@@ -43,7 +61,8 @@ function changeDirection(e) {
 function draw() {
   //方格內全部塗黑
   ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, canvas.width, canvas.height); //fillstyle先決定使用顏色 fillrect決定使用範圍
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  //fillstyle先決定使用顏色 fillrect決定使用範圍
 
   //螢幕內畫出蛇
   for (let i = 0; i < snake.length; i++) {
@@ -67,6 +86,13 @@ function draw() {
     ctx.strokeStyle = "white"; //外框白色
     ctx.fillRect(snake[i].x, snake[i].y, unit, unit);
     ctx.strokeRect(snake[i].x, snake[i].y, unit, unit);
+
+    //畫出蛋
+
+    for (let j = 0; j < egg.length; j++) {
+      ctx.fillStyle = "red";
+      ctx.fillRect(egg[j].x, egg[j].y, unit, unit);
+    }
   }
 
   //以d的方向決定蛇的下依禎數要放在哪裡
@@ -94,5 +120,3 @@ function draw() {
 }
 
 setInterval(draw, 100);
-
-//穿牆功能
