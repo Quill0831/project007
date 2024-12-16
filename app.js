@@ -54,6 +54,34 @@ class Fruit {
     ctx.fillStyle = "yellow";
     ctx.fillRect(this.x, this.y, unit, unit);
   }
+
+  pickALocation() {
+    //果實重生 不可以跟蛇的身體重疊
+    //生成新的果實位置
+    let new_x;
+    let new_y;
+    let overlapping = false;
+    //如果跟蛇的身體重複 overlapping變成true
+    //下面的do迴圈就會再跑一次 直到不重複
+    function checkOverlap() {
+      for (let i = 0; i < snake.length; i++) {
+        if (new_x == snake[i].x && new_y == snake[i].y) {
+          overlapping = true;
+          return;
+        }
+      }
+    }
+    //do while loop:先執行1次 如果while後面的夸號內是true 就在執行一次
+    do {
+      new_x = Math.floor(Math.random() * column) * unit;
+      new_y = Math.floor(Math.random() * row) * unit;
+      checkOverlap();
+    } while (overlapping);
+
+    this.x = new_x;
+    this.y = new_y;
+    console.log("果實重生");
+  }
 }
 
 let myFruit = new Fruit();
@@ -81,10 +109,6 @@ function draw() {
 
   //螢幕內畫出蛇
   myFruit.drawFruit();
-
-  console.log(column);
-  console.log(row);
-  console.log(`果实位置: x=${this.x}, y=${this.y}`);
 
   for (let i = 0; i < snake.length; i++) {
     if (i == 0) {
@@ -135,8 +159,14 @@ function draw() {
     x: snakeX,
     y: snakeY,
   };
+  //確認有沒有吃到果實 有吃到就變長
 
-  snake.pop();
+  if (snake[0].x == myFruit.x && snake[0].y == myFruit.y) {
+    myFruit.pickALocation();
+  } else {
+    snake.pop();
+  }
+
   snake.unshift(newhead);
 }
 
