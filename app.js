@@ -42,8 +42,6 @@ snake[3] = {
 //   y: randomLocationUnitY,
 // };
 
-function test() {}
-
 class Fruit {
   constructor() {
     this.x = Math.floor(Math.random() * column) * unit;
@@ -68,6 +66,8 @@ class Fruit {
         if (new_x == snake[i].x && new_y == snake[i].y) {
           overlapping = true;
           return;
+        } else {
+          overlapping = false;
         }
       }
     }
@@ -107,6 +107,14 @@ function draw() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   //fillstyle先決定使用顏色 fillrect決定使用範圍
 
+  //咬到自己遊戲結束
+  for (let i = 1; i < snake.length; i++) {
+    if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
+      clearInterval(myGame);
+      alert("GG");
+      return;
+    }
+  }
   //螢幕內畫出蛇
   myFruit.drawFruit();
 
@@ -116,13 +124,13 @@ function draw() {
     } else {
       ctx.fillStyle = "lightblue"; //蛇身體顏色
     }
-    if (snake[i].x > canvas.width) {
+    if (snake[i].x >= canvas.width) {
       snake[i].x = 0;
     }
     if (snake[i].x < 0) {
       snake[i].x = canvas.width - unit;
     }
-    if (snake[i].y > canvas.height) {
+    if (snake[i].y >= canvas.height) {
       snake[i].y = 0;
     }
     if (snake[i].y < 0) {
@@ -139,6 +147,8 @@ function draw() {
     //   ctx.fillRect(egg[j].x, egg[j].y, unit, unit);
     // }
   }
+
+  //蛇吃到自己會死 1.snake[0].x ==
 
   //以d的方向決定蛇的下依禎數要放在哪裡
   let snakeX = snake[0].x; //蛇的初始位置 抓開頭array的xy座標
@@ -170,4 +180,4 @@ function draw() {
   snake.unshift(newhead);
 }
 
-setInterval(draw, 100);
+let myGame = setInterval(draw, 100);
