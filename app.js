@@ -115,7 +115,7 @@ function draw() {
       return;
     }
   }
-  //螢幕內畫出蛇
+  //螢幕內畫出蛇!
   myFruit.drawFruit();
 
   for (let i = 0; i < snake.length; i++) {
