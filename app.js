@@ -101,6 +101,8 @@ function changeDirection(e) {
   }
 }
 
+window.removeEventListener("keydown", changeDirection);
+
 function draw() {
   //方格內全部塗黑
   ctx.fillStyle = "black";
@@ -178,6 +180,7 @@ function draw() {
   }
 
   snake.unshift(newhead);
+  window.addEventListener("keydown", changeDirection);
 }
 
 let myGame = setInterval(draw, 100);
