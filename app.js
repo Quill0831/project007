@@ -85,8 +85,16 @@ class Fruit {
 }
 
 let myFruit = new Fruit();
-window.addEventListener("keydown", changeDirection); //鍵盤按下去 執行changeDirection
+window.addEventListener("keydown", changeDirection);
+//鍵盤按下去 執行changeDirection
 //控制方向
+let highestScore;
+loadHighestStore();
+let score = 0;
+
+document.getElementById("myScore").innerHTML = "遊戲分數:" + score;
+document.getElementById("myScore2").innerHTML = "最高分:" + highestScore;
+
 let d = "Right";
 function changeDirection(e) {
   if (e.key == "ArrowRight" && d !== "left") {
@@ -175,6 +183,10 @@ function draw() {
 
   if (snake[0].x == myFruit.x && snake[0].y == myFruit.y) {
     myFruit.pickALocation();
+    score++;
+    setHighestStore(score);
+    document.getElementById("myScore").innerHTML = "遊戲分數:" + score;
+    document.getElementById("myScore2").innerHTML = "最高分:" + highestScore;
   } else {
     snake.pop();
   }
@@ -184,3 +196,22 @@ function draw() {
 }
 
 let myGame = setInterval(draw, 100);
+
+//讀取最高分紀錄
+function loadHighestStore() {
+  if (localStorage.getItem("highestScore") == null) {
+    highestScore = 0;
+    //如果沒有玩過 最高分是0
+  } else {
+    //如果有玩過 抓網頁內的最高分
+    highestScore = Number(localStorage.getItem("highestScore"));
+  }
+}
+//寫入最高分紀錄
+function setHighestStore(x) {
+  if (x > highestScore) {
+    //超過最高分
+    localStorage.setItem("highestScore", x);
+    highestScore = x;
+  }
+}
